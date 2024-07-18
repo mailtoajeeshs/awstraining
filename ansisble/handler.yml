@@ -1,0 +1,29 @@
+---
+- name: Example playbook with handlers
+  hosts: servergroup
+  become: yes
+  tasks:
+    - name: install nginx
+      apt:
+        name: nginx
+        state: present
+    - name: backup index.html
+      copy:
+        src: /var/www/html/
+        dest: /etc/nginx/nginx.conf  
+    - name: update config file
+      copy:
+        src: /path/to/nginx.conf
+        dest: /etc/nginx/nginx.conf
+      notify: 
+       - backup old config
+       - reload nginx
+  handlers:
+    - name: backup old file
+      copy:
+        src: /path/to/nginx.conf
+        dest: /etc/nginx/nginx.conf
+    - name: reload nginx
+      service:
+        name: nginx
+        state: reloaded
