@@ -1,13 +1,13 @@
 ---
 - name: Qtree server Setup
   become: yes
-  hosts: all
+  hosts: servergroup
   tasks:
     - name: Create an application user
       user:
-        name: qtree
-        password: test123
+        name: qtree54
+        password: test55123
     - name: Create application file
       file:
-        path: /root/sample.html
+        path: /root/Test123.html
         state: touch    
